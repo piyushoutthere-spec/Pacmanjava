@@ -15,6 +15,9 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
 
         int startX;
         int startY;
+        char direction = 'U'; //U D L R
+        int velocityX = 0;
+        int velocityY = 0;
 
         Block(Image image,int x,int y,int width, int height) {
             this.image = image;
@@ -25,7 +28,36 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
             this.startX = x;
             this.startY = y;
         }
+
+        void updatedirection(char direction) {
+            this.direction = direction;
+            updateVelocity();
+        }
+
+        void updateVelocity() {
+            if (this.direction == 'U') {
+                this.velocityX = 0;
+                this.velocityY = -tilesize/4;
+            }
+
+            else if (this.direction == 'D') {
+                this.velocityX = 0;
+                this.velocityY = tilesize/4;
+            }
+
+            else if (this.direction == 'L') {
+                this.velocityX = -tilesize/4;
+                this.velocityY= 0;
+            }
+
+            else if (this.direction == 'R') {
+                this.velocityX = tilesize/4;
+                this.velocityY = 0;
+            }
+        }
     }
+
+
     private int rowcount = 21;
     private int columncount = 19;
     private int tilesize = 32;
@@ -172,10 +204,20 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
         }
     }
 
+    public void move() {
+        pacman.x += pacman.velocityX;
+        pacman.y += pacman.velocityY;
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        move();
         repaint();
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {}
@@ -183,9 +225,21 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("KeyEvent: " + e.getKeyCode());
+        //System.out.println("KeyEvent: " + e.getKeyCode());
+        if (e.getKeyCode() == KeyEvent.VK_UP){
+            pacman.updatedirection('U');
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_DOWN){
+            pacman.updatedirection('D');
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT){
+            pacman.updatedirection('L');
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            pacman.updatedirection('R');
+        }
     }
-        
-    @Override
-    public void keyTyped(KeyEvent e) {}
 }
