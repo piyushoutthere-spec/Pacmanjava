@@ -128,12 +128,24 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
     int score = 0;
     int lives = 3;
     boolean gameover = false;
+    boolean gamestarted = false;
 
     Pacman() {
         setPreferredSize(new Dimension(boardwidth, boardheight));
         setBackground(Color.BLACK);
         addKeyListener(this);
         setFocusable(true);
+
+        addMouseListener(new MouseAdapter() {
+            @Override 
+            public void mouseClicked(MouseEvent e) {
+                if (!gamestarted) {
+                    gamestarted = true;
+                    requestFocusInWindow();
+                    repaint();
+                }
+            }
+        });
 
         // Loading images
         wallImage = new ImageIcon(getClass().getResource("assets/wall.png")).getImage();
@@ -237,6 +249,16 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
         else {
             g.drawString("x" + String.valueOf(lives) + "Score" + String.valueOf(score),tilesize/2,tilesize/2);
         }
+
+        // start game button
+        if (!gamestarted) {
+            g.setColor(Color.YELLOW);
+            g.fillRoundRect(224,300,160,55,15,15);
+
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Arial",Font.BOLD,20));
+            g.drawString("Start Game",238,334);
+        }
     }
 
     public void move() {
@@ -323,7 +345,9 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        move();
+        if (gamestarted){
+            move();
+        }
         repaint();
         if (gameover) {
             gameloop.stop();
