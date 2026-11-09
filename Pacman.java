@@ -118,6 +118,8 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
     Block pacman;
 
     Timer gameloop;
+    char[] directions = {'U','D','L','R'}; // up down left right
+    Random random = new Random();
 
     Pacman() {
         setPreferredSize(new Dimension(boardwidth, boardheight));
@@ -138,6 +140,10 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
         pacmanRightImage = new ImageIcon(getClass().getResource("assets/pacmanRight.png")).getImage();
 
         loadMap();
+        for (Block ghost : ghosts) {
+            char newDirection = directions[random.nextInt(4)];
+            ghost.updatedirection(newDirection);
+        }
         // how long it takes to start timer
         gameloop = new Timer(50, this);
         gameloop.start();
@@ -226,6 +232,12 @@ public class Pacman extends JPanel  implements ActionListener , KeyListener{
                 pacman.y -= pacman.velocityY;
                 break;
             }
+        }
+
+        // check ghost collision
+        for (Block ghost : ghosts) {
+            ghost.x += ghost.velocityX;
+            ghost.y += ghost.velocityY;
         }
     }
 
