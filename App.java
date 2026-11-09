@@ -1,7 +1,7 @@
 import javax.swing.JFrame;
 
 
-public class Pacman {
+public class App {
     public static void main(String[]args) throws Exception{
         int rowcount=21;
         int columncount = 19;
