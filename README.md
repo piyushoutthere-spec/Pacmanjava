@@ -11,8 +11,15 @@ and the ghosts will be moving around randomly. The Pacman will have 3 lives afte
 
 ## Getting started
 ### Dependencies 
+- Java Development kit (JDR) 21 or later
+- JRE to run the game.
 ### Installing
+- Open the Releases section
+- Download Pacman.jar
+- Make sure java 21 or later is installed on your computer
 ### Executing Program
+- Open the terminal in folder having Pacman.jar and run 'java -jar Pacman.jar'
+- Alternatively , double click Pacman.jar if your system is configured to open Java applications.
 
 
 ## Limits of projects
