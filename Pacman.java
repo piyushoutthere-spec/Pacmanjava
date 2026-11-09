@@ -91,9 +91,6 @@ public class Pacman extends JPanel {
         pacmanRightImage = new ImageIcon(getClass().getResource("assets/pacmanRight.png")).getImage();
 
         loadMap();
-        System.out.println(walls.size());
-        System.out.println(foods.size());
-        System.out.println(ghosts.size());
     }
 
     public void loadMap() {
@@ -143,6 +140,28 @@ public class Pacman extends JPanel {
                     foods.add(food);
                 }
             }
+        }
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        draw(g);
+    }
+
+    public void draw(Graphics g) {
+        g.drawImage(pacman.image, pacman.x, pacman.y , pacman.width,pacman.height,null);
+
+        for (Block ghost : ghosts) {
+            g.drawImage(ghost.image,ghost.x, ghost.y , ghost.width, ghost.height,null);
+        }
+
+        for (Block wall : walls) {
+            g.drawImage(wall.image,wall.x,wall.y,wall.width,wall.height,null);
+        }
+
+        g.setColor(Color.WHITE);
+        for (Block food : foods) {
+            g.fillRect(food.x , food.y , food.width, food.height);
         }
     }
 }
